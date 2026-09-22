@@ -1,0 +1,378 @@
+/* ============================================================
+   Flores amarillas — hoja de estilos
+   Paleta de noche de campo: verde profundo, oro y crema.
+   ============================================================ */
+
+:root {
+  --noche:        #070B06;
+  --noche-alta:   #16240E;
+  --noche-baja:   #04060A;
+  --oro:          #FFC93C;
+  --oro-claro:    #FFE9A0;
+  --ambar:        #E8890B;
+  --crema:        #FFF6DE;
+  --hoja:         #6E8F44;
+
+  --tenue:        rgba(255, 246, 222, .62);
+  --borde-oro:    rgba(255, 201, 60, .38);
+  --vidrio:       rgba(12, 20, 10, .55);
+  --halo:         0 0 28px rgba(255, 201, 60, .35);
+
+  --radio:        999px;
+  --radio-hoja:   14px;
+  --paso:         clamp(1rem, 3.2vw, 2.2rem);
+
+  --seguro-arriba: env(safe-area-inset-top, 0px);
+  --seguro-abajo:  env(safe-area-inset-bottom, 0px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(125% 95% at 50% 38%, var(--noche-alta) 0%, #0A1208 44%, var(--noche-baja) 100%)
+    var(--noche);
+  color: var(--crema);
+  font-family: "Jost", "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-weight: 300;
+  font-size: clamp(0.98rem, 0.9rem + 0.4vw, 1.12rem);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  touch-action: manipulation;
+}
+
+.defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* ---------- Lienzo de partículas ---------- */
+
+#lienzo {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+}
+
+/* ---------- Jardín de flores flotantes ---------- */
+
+.jardin {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.flor {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: calc(var(--z) * clamp(76px, 15vmin, 168px));
+  transform: translate(-50%, -50%)
+             translate(calc(var(--px, 0) * var(--z) * 26px), calc(var(--py, 0) * var(--z) * 18px));
+  opacity: 0;
+  transition: opacity 1.4s ease var(--retraso, 0s);
+}
+
+body.abierto .flor { opacity: calc(.34 + var(--z) * .66); }
+
+.flor__cuerpo {
+  display: block;
+  transform-origin: 50% 90%;
+  animation: mecer var(--ritmo, 7s) ease-in-out var(--desfase, 0s) infinite alternate;
+  filter: drop-shadow(0 0 calc(var(--z) * 16px) rgba(255, 184, 28, .45));
+}
+
+.flor svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+.flor__mensaje {
+  display: block;
+  margin-top: .35em;
+  text-align: center;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: calc(var(--z) * clamp(.95rem, 2.6vmin, 1.45rem));
+  letter-spacing: .01em;
+  color: var(--crema);
+  text-shadow: 0 0 18px rgba(255, 201, 60, .55), 0 2px 12px rgba(0, 0, 0, .8);
+  white-space: nowrap;
+}
+
+@keyframes mecer {
+  from { transform: translateY(0) rotate(-3.2deg); }
+  to   { transform: translateY(-14px) rotate(3.2deg); }
+}
+
+/* ---------- Escena central ---------- */
+
+.escena {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  justify-items: center;
+  padding: calc(var(--paso) + var(--seguro-arriba)) var(--paso)
+           calc(var(--paso) * 1.2 + 76px + var(--seguro-abajo));
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.8s ease .3s;
+}
+
+body.abierto .escena { opacity: 1; }
+
+.fecha {
+  margin: 0;
+  font-size: .82rem;
+  font-weight: 300;
+  letter-spacing: .28em;
+  color: var(--tenue);
+  text-indent: .28em;
+}
+
+.centro { grid-row: 2; }
+
+.dedicatoria {
+  grid-row: 3;
+  margin: 0;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.dedicatoria__linea {
+  display: block;
+  font-size: .8rem;
+  letter-spacing: .3em;
+  text-indent: .3em;
+  color: var(--tenue);
+}
+
+.dedicatoria__nombre {
+  display: block;
+  margin-top: .15em;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(2.4rem, 11vw, 4.6rem);
+  color: var(--oro-claro);
+  text-shadow: var(--halo), 0 0 60px rgba(255, 160, 20, .35);
+}
+
+/* ---------- Portada ---------- */
+
+.portada {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(.9rem, 2.6vw, 1.5rem);
+  padding: calc(var(--paso) + var(--seguro-arriba)) var(--paso)
+           calc(var(--paso) + var(--seguro-abajo));
+  text-align: center;
+  background: radial-gradient(100% 70% at 50% 45%, rgba(10, 16, 8, .72), rgba(4, 6, 10, .95));
+  transition: opacity .9s ease, visibility .9s;
+}
+
+body.abierto .portada { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.brote { width: clamp(88px, 22vmin, 140px); height: auto; }
+.brote__flor { transform-origin: 60px 52px; animation: respirar 4.5s ease-in-out infinite; }
+
+@keyframes respirar {
+  0%, 100% { transform: scale(1) rotate(-2deg); }
+  50%      { transform: scale(1.06) rotate(2deg); }
+}
+
+.portada__titulo {
+  margin: 0;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 400;
+  font-size: clamp(2.6rem, 12vw, 5.4rem);
+  line-height: .98;
+  letter-spacing: -.01em;
+  color: var(--crema);
+}
+
+.portada__titulo--alt {
+  font-style: italic;
+  color: var(--oro-claro);
+  text-shadow: var(--halo);
+}
+
+.portada__texto {
+  max-width: 34ch;
+  margin: 0;
+  color: var(--tenue);
+}
+
+/* ---------- Botones ---------- */
+
+.boton {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5em;
+  min-height: 46px;
+  padding: .7em 1.5em;
+  border: 1px solid var(--borde-oro);
+  border-radius: var(--radio);
+  background: var(--vidrio);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  color: var(--crema);
+  font-family: inherit;
+  font-size: .96rem;
+  font-weight: 400;
+  letter-spacing: .04em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: border-color .3s ease, box-shadow .3s ease, transform .2s ease, color .3s ease;
+}
+
+.boton:hover,
+.boton:focus-visible {
+  border-color: var(--oro);
+  color: var(--oro-claro);
+  box-shadow: var(--halo);
+}
+
+.boton:focus-visible { outline: 2px solid var(--oro-claro); outline-offset: 3px; }
+.boton:active { transform: scale(.97); }
+
+.boton--grande {
+  margin-top: .4rem;
+  padding: .9em 2.2em;
+  font-size: 1.04rem;
+  box-shadow: 0 0 0 rgba(255, 201, 60, .5);
+  animation: latir 3.4s ease-in-out infinite;
+}
+
+@keyframes latir {
+  0%, 100% { box-shadow: 0 0 0 rgba(255, 201, 60, 0); }
+  50%      { box-shadow: 0 0 34px rgba(255, 201, 60, .38); }
+}
+
+.boton--icono { min-width: 46px; padding: .7em; }
+.boton--icono svg { width: 21px; height: 21px; }
+.boton--icono[aria-pressed="true"] { border-color: var(--oro); color: var(--oro-claro); }
+
+/* ---------- Barra inferior ---------- */
+
+.barra {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--paso) * .9 + var(--seguro-abajo));
+  z-index: 4;
+  display: flex;
+  gap: .6rem;
+  transform: translateX(-50%);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s ease 1.2s, visibility 1s;
+}
+
+body.abierto .barra { opacity: 1; visibility: visible; }
+
+/* ---------- Carta ---------- */
+
+.carta {
+  position: fixed;
+  inset: 0;
+  z-index: 6;
+  display: grid;
+  place-items: center;
+  padding: calc(var(--paso) + var(--seguro-arriba)) var(--paso)
+           calc(var(--paso) + var(--seguro-abajo));
+  background: rgba(3, 6, 4, .78);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity .45s ease;
+}
+
+.carta[hidden] { display: none; }
+.carta.visible { opacity: 1; }
+
+.carta__hoja {
+  width: min(52ch, 100%);
+  max-height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: clamp(1.5rem, 5vw, 2.8rem);
+  border: 1px solid var(--borde-oro);
+  border-radius: var(--radio-hoja);
+  background:
+    linear-gradient(180deg, rgba(28, 40, 18, .92), rgba(10, 16, 8, .94));
+  box-shadow: 0 30px 90px rgba(0, 0, 0, .6), inset 0 0 60px rgba(255, 201, 60, .06);
+  transform: translateY(14px) scale(.98);
+  transition: transform .45s cubic-bezier(.2, .8, .3, 1);
+}
+
+.carta.visible .carta__hoja { transform: none; }
+
+.carta__titulo {
+  margin: 0 0 1rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(1.7rem, 6vw, 2.5rem);
+  line-height: 1.1;
+  color: var(--oro-claro);
+}
+
+.carta__cuerpo p {
+  margin: 0 0 1.05em;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(1.12rem, 3.4vw, 1.36rem);
+  line-height: 1.72;
+  color: var(--crema);
+}
+
+.carta__firma {
+  margin: 1.6rem 0 1.8rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 1.3rem;
+  color: var(--oro);
+}
+
+/* ---------- Pantallas anchas y bajas (móvil acostado) ---------- */
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .escena { padding-bottom: calc(var(--paso) + 64px + var(--seguro-abajo)); }
+  .dedicatoria__nombre { font-size: clamp(1.8rem, 7vh, 2.6rem); }
+  .portada { gap: .6rem; }
+  .brote { width: 72px; }
+  .portada__titulo { font-size: clamp(1.9rem, 8vh, 3rem); }
+  .portada__texto { display: none; }
+}
+
+@media (min-width: 1100px) {
+  .escena { padding-bottom: calc(var(--paso) * 1.6 + 84px + var(--seguro-abajo)); }
+}
+
+/* ---------- Preferencia de movimiento reducido ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .flor__cuerpo,
+  .brote__flor,
+  .boton--grande { animation: none; }
+
+  .flor,
+  .escena,
+  .portada,
+  .carta,
+  .carta__hoja,
+  .barra { transition-duration: .01ms; }
+}

@@ -1,0 +1,17 @@
+# Infraestructura como codigo para Render (Blueprint).
+# En Render: New + > Blueprint > selecciona el repositorio.
+services:
+  - type: web
+    name: flores-amarillas
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20.11.1
+      - key: NODE_ENV
+        value: production

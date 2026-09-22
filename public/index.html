@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Flores amarillas para ti</title>
+<meta name="description" content="Un ramo de flores amarillas que se arma solo, con mensajes que flotan en la noche.">
+<meta name="theme-color" content="#070B06">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Flores amarillas para ti">
+<meta property="og:description" content="Un ramo que se arma solo, con mensajes que flotan en la noche.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="cerrado">
+
+  <!-- Definiciones SVG compartidas por todas las flores -->
+  <svg class="defs" aria-hidden="true" focusable="false">
+    <defs>
+      <radialGradient id="g-petalo" cx="50%" cy="85%" r="80%">
+        <stop offset="0%" stop-color="#FFF0B0"/>
+        <stop offset="45%" stop-color="#FFC93C"/>
+        <stop offset="100%" stop-color="#E8890B"/>
+      </radialGradient>
+      <radialGradient id="g-petalo-int" cx="50%" cy="85%" r="80%">
+        <stop offset="0%" stop-color="#FFE9A0"/>
+        <stop offset="100%" stop-color="#F0A81C"/>
+      </radialGradient>
+      <radialGradient id="g-centro" cx="38%" cy="35%" r="75%">
+        <stop offset="0%" stop-color="#8A5A22"/>
+        <stop offset="60%" stop-color="#4A2F16"/>
+        <stop offset="100%" stop-color="#2A190B"/>
+      </radialGradient>
+      <linearGradient id="g-tallo" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#8FAE55"/>
+        <stop offset="100%" stop-color="#4E6B2C"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <canvas id="lienzo" aria-hidden="true"></canvas>
+  <div id="jardin" class="jardin" aria-hidden="true"></div>
+
+  <main class="escena" id="escena" aria-hidden="true">
+    <p class="fecha" id="fecha">21 de septiembre</p>
+    <div class="centro" id="centro"></div>
+    <p class="dedicatoria">
+      <span class="dedicatoria__linea">Para</span>
+      <span class="dedicatoria__nombre" id="nombre">ti</span>
+    </p>
+  </main>
+
+  <!-- Portada: lo primero que ve quien recibe el regalo -->
+  <section class="portada" id="portada">
+    <div class="portada__sobre" aria-hidden="true">
+      <svg viewBox="0 0 120 120" class="brote">
+        <g class="brote__flor">
+          <circle cx="60" cy="52" r="9" fill="url(#g-centro)"/>
+          <g class="brote__petalos"></g>
+        </g>
+        <path d="M60,61 C60,80 58,92 56,108" stroke="url(#g-tallo)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        <path d="M59,78 C48,72 42,76 40,84 C48,88 55,85 59,78Z" fill="url(#g-tallo)"/>
+      </svg>
+    </div>
+    <h1 class="portada__titulo">
+      Flores amarillas<br><span class="portada__titulo--alt">para ti</span>
+    </h1>
+    <p class="portada__texto">Alguien te mandó un ramo que no se marchita.</p>
+    <button class="boton boton--grande" id="abrir" type="button">Abrir el ramo</button>
+  </section>
+
+  <div class="barra" id="barra" aria-hidden="true">
+    <button class="boton" id="verCarta" type="button">Leer la carta</button>
+    <button class="boton boton--icono" id="musica" type="button" aria-pressed="false" aria-label="Poner música">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V6l10-2v12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6.5" cy="18" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="16.5" cy="16" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+    </button>
+  </div>
+
+  <div class="carta" id="carta" role="dialog" aria-modal="true" aria-labelledby="cartaTitulo" hidden>
+    <article class="carta__hoja">
+      <h2 class="carta__titulo" id="cartaTitulo">Lo que quería decirte</h2>
+      <div class="carta__cuerpo" id="cartaCuerpo"></div>
+      <p class="carta__firma" id="cartaFirma"></p>
+      <button class="boton" id="cerrarCarta" type="button">Cerrar la carta</button>
+    </article>
+  </div>
+
+  <script src="js/config.js" defer></script>
+  <script src="js/flores.js" defer></script>
+  <script src="js/particulas.js" defer></script>
+  <script src="js/audio.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

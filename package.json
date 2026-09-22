@@ -1,0 +1,19 @@
+{
+  "name": "flores-amarillas",
+  "version": "1.0.0",
+  "description": "Pagina-regalo de flores amarillas con particulas doradas y mensajes flotantes.",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build:unico": "node build-unico.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "license": "MIT"
+}
